@@ -12,8 +12,6 @@ public interface ProductService {
 
     public Optional<Product> getProductByKey(String key);
 
-    List<Product> getProductsWithTaxCategory();
-
     void listProductProjections(List<ProductProjection> projections);
 
     List<ProductProjection> findProductsWithTaxCategory();

@@ -18,6 +18,13 @@ import java.util.Optional;
 @Component
 public class Runner implements CommandLineRunner {
 
+    private static final String ITEM_ID = "64544219-d6cb-4680-ad20-b09ce0a5c088";
+    private static final Long VARIANT_ID = 1L;
+    private static final String ITEM_ID_2 = "e616c662-bfe6-42b8-8cbf-27ec3fe200e1";
+    private static final Long VARIANT_ID_2 = 1L;
+    private static final String ITEM_ID_3 = "7924583f-d5e2-44e4-a126-e1c997506150";
+    private static final Long VARIANT_ID_3 = 1L;
+
     private ProductService productService;
     private CartTrial cartTrial;
 
@@ -35,9 +42,8 @@ public class Runner implements CommandLineRunner {
 
         List<ProductProjection> products = productService.findProducts();
 
-//        List<Product> productsWithTaxCategory = productService.getProductsWithTaxCategory();
-//        List<ProductProjection> productsWithTaxCategory1 = productService.findProductsWithTaxCategory();
-//        productService.listProductProjections(productsWithTaxCategory1);
+        List<ProductProjection> productsWithTaxCategory = productService.findProductsWithTaxCategory();
+        productService.listProductProjections(productsWithTaxCategory);
 
         System.out.println(products);
 
@@ -45,11 +51,6 @@ public class Runner implements CommandLineRunner {
 //        Cart cart = cartTrial.createCart();
          // 1. Create Cart
         final String CART_ID = "1bb01b25-b961-422a-915e-e6a85f5a38da";
-        final String ITEM_ID = "64544219-d6cb-4680-ad20-b09ce0a5c088";
-        final Long VARIANT_ID = 1L;
-        final String ITEM_ID_2 = "e616c662-bfe6-42b8-8cbf-27ec3fe200e1";
-        final Long VARIANT_ID_2 = 1L;
-        final String ITEM_KEY = "30021";
 
         // 2. Lookup cart
         cart = cartTrial.findCartById( CART_ID ).get();
@@ -70,6 +71,8 @@ public class Runner implements CommandLineRunner {
         // 6. Add another item to cart
 //        cart = cartTrial.addItemToCart( CART_ID, cartVersion,ITEM_ID_2, VARIANT_ID_2, 3 );
 //        cartVersion = cart.getVersion();
+        cart = cartTrial.addItemToCart( CART_ID, cartVersion,ITEM_ID_3, VARIANT_ID_3,1 );
+        cartVersion = cart.getVersion();
 
         // 7. Remove item from cart
         cart = cartTrial.removeItemFromCart( CART_ID, cartVersion, ITEM_ID_2, VARIANT_ID_2, 0L );
@@ -77,8 +80,6 @@ public class Runner implements CommandLineRunner {
 
         cart = cartTrial.findCartById( CART_ID ).get();
         cartTrial.printCart( cart );
-
-        // cart id - 1bb01b25-b961-422a-915e-e6a85f5a38da
 
         Optional<String> cartByIdAsString = cartTrial.getCartByIdAsString(CART_ID, false);
         System.out.println(cartByIdAsString.orElse(""));

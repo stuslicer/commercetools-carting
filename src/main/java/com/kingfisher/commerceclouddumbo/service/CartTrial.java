@@ -13,13 +13,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Cart items - products
- * 57b1673c-5815-4100-adc7-b8e3c2c36261 - Evo-Stik White for Life Sealant 295ml                   - 56846    - £5.43
- * 83c0cbe6-d2c1-4100-b8e2-cc383a06da63 - Quicksilver® Countersunk Prodrive® 8 x 5/8" Pack of 200 - 19850    - £1.28   >5 £1.02 >15 £ 0.96
- * 3819ae64-b2e3-4100-8708-f7be3bc41158 - No Nonsense Contact Adhesive 500ml                      - 97225    - £3.51
- * e8b38d2a-8c7b-4100-b2f9-a1c225b445e2 - Galvanised 4 Shelf Racking Unit                         - 85560    - £357.89
- */
 @Component
 public class CartTrial {
 
@@ -249,10 +242,11 @@ public class CartTrial {
         for (LineItem lineItem : lineItems) {
             Optional<Product> productById = productService.getProductById(lineItem.getProductId());
             productById.ifPresent((product) -> {
-                System.out.printf("%s - %s - %s - %d -  %s%n", product.getId(), CtUtils.print(product.getMasterData().getCurrent().getName()),
-                       product.getKey(),
-                       lineItem.getQuantity(),
-                       CtUtils.printPrice( lineItem.getTotalPrice() ) );
+                System.out.printf("%s - %s - %s - %d -  %s price: %s %n", product.getId(), CtUtils.print(product.getMasterData().getCurrent().getName()),
+                        product.getKey(),
+                        lineItem.getQuantity(),
+                        CtUtils.printPrice( lineItem.getTotalPrice() ),
+                        CtUtils.printPrice( lineItem.getTaxedPrice() ));
             });
 
         }

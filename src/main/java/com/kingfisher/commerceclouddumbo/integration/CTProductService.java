@@ -42,19 +42,6 @@ public class CTProductService implements ProductService {
         return Optional.ofNullable(product);
     }
 
-
-
-    @Override
-    public List<Product> getProductsWithTaxCategory() {
-        ProductPagedQueryResponse products = apiRoot.products()
-                .get()
-                .withWhere("taxCategory = :category", "category", "" )
-                .executeBlocking()
-                .getBody();
-
-        return products.getResults();
-    }
-
     public Optional<TaxCategory> getTaxCategory() {
         TaxCategory products = apiRoot.taxCategories()
                 .withKey("VAT-S")
